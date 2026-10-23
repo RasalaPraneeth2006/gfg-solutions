@@ -1,56 +1,80 @@
 ## 01. C++ Solution || Easy Approach and Step by Step Explanation
 
-The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/check-if-it-is-possible-to-convert-one-string-into-another-with-given-constraints4116/1?_gl=1*1mqr9pm*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjwlYHBBhD9ARIsALRu09pbgqNAyqVxhcm8IAnjUTMlLJhIC1w5aC7xa3QAQYivF9iTVK4woaUaAsehEALw_wcB&gbraid=0AAAAAC9yBkCuY1XCOe54dwAzS3bpeogBG)
+The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/pairs-violating-bst-property--212515/1?_gl=1*hqm8yq*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjwlYHBBhD9ARIsALRu09pbgqNAyqVxhcm8IAnjUTMlLJhIC1w5aC7xa3QAQYivF9iTVK4woaUaAsehEALw_wcB&gbraid=0AAAAAC9yBkCuY1XCOe54dwAzS3bpeogBG)
 
 ### Problem Description
 
-**Task:** Given two strings s1 and s2, consisting only of the characters 'A', 'B', and '#'. Determine whether s1 can be transformed into s2 by performing the following operations on s1:'A' can move only towards the left. 'B' can move only towards the right.Neither 'A' nor 'B' can cross each other.'#' represents an empty position through which 'A' and 'B' can move.Moving the character at index i one step to the left means swapping it with the character at index i - 1, provided i - 1 >= 0. Similarly, moving it one step to the right means swapping it with the character at index i + 1, provided i + 1 < s1.length().Return true if s1 can be transformed into s2; otherwise, return false.Examples:Input: s1 = #A#B#B#, s2 = A###B#B
+**Task:** Given root of a binary tree in which all node values are distinct, count pairs of nodes that violate any of the following Binary Search Tree (BST) properties. All values in the left subtree are strictly smaller.All values in the right subtree are strictly greater.Examples:Input: root[] = [10, 50, 40, N, N, 20, 30]Output: 5
 
 #### Examples
 
 ##### Example 1
 
-- **Output:**
-```text
-false
-```
-- **Explanation:** The character 'A' in s1 is at index 1, whereas the corresponding 'A' in s2 is at index 3. Since 'A' can move only towards the left, it cannot reach a position to the right of its current position. Therefore, s1 cannot be transformed into s2, and hence, the answer is false.
+- **Explanation:** There are total 10 pairs (80, 30), (80, 60), (80, 50), (30, 60), (40, 70), (40, 30), (40, 50), (70, 30), (70, 60), (70, 50) which violate the BST properties.
 
 ### Time and Auxiliary Space Complexity
 
-- **Expected Time Complexity:** O(n + m)
-- **Expected Auxiliary Space Complexity:** O(1)
+- **Expected Time Complexity:** O(n log n)
+- **Expected Auxiliary Space Complexity:** O(n)
 
 ### Accepted Solutions (1)
 
-#### Solution 1 (C++)
+#### Solution 1 (Java)
 
-- **Submitted:** 2026-10-17 22:31:00
+- **Submitted:** 2026-10-23 21:58:17
 - **Status:** Correct
-- **Marks:** 2
+- **Marks:** 4
 
-```cpp
+```java
 class Solution {
-  public:
-    bool isItPossible(string &s1, string &s2) {
-        if (s1.length() != s2.length()) return false;
-        int n = s1.length();
-        int i = 0, j = 0;
-        while (i < n && j < n) {
-            while (i < n && s1[i] == '#') i++;
-            while (j < n && s2[j] == '#') j++;
-            if (i == n || j == n) break;
-            if (s1[i] != s2[j]) return false;
-            if (s1[i] == 'A' && i < j) return false;
-            if (s1[i] == 'B' && i > j) return false;
-            i++;
-            j++;
-        }
-        while (i < n && s1[i] == '#') i++;
-        while (j < n && s2[j] == '#') j++;
-        return i == n && j == n;
+    private List<Integer> elements;
+    private int pairs;
+
+    public int pairsViolatingBST(Node root) {
+        // code here
+        elements = new ArrayList<>();
+        pairs = 0;
+
+        reverseInorder(root);
+
+        return pairs;
     }
-};
+
+    // Right -> Root -> Left (descending order of inorder)
+    private void reverseInorder(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        reverseInorder(root.right);
+
+        int count = countSmaller(root.data);
+        elements.add(count, root.data);  // sorted order maintain hota hai
+        pairs += count;
+
+        reverseInorder(root.left);
+    }
+
+    // Kitne elements target se strictly chhote hain (binary search)
+    private int countSmaller(int target) {
+        int l = 0;
+        int r = elements.size() - 1;
+        int ans = -1;
+
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+
+            if (elements.get(mid) >= target) {
+                r = mid - 1;
+            } else {
+                ans = mid;
+                l = mid + 1;
+            }
+        }
+        
+        return ans + 1;
+    }
+}
 ```
 
-*Generated on: 10/17/2026, 10:31:27 PM*
+*Generated on: 10/23/2026, 9:58:41 PM*
