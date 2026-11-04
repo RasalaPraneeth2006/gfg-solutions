@@ -1,6 +1,6 @@
 ## 01. XOR of All Subarray XORs
 
-The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/game-of-xor1541/1?_gl=1*16mxqmg*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjwlYHBBhD9ARIsALRu09pbgqNAyqVxhcm8IAnjUTMlLJhIC1w5aC7xa3QAQYivF9iTVK4woaUaAsehEALw_wcB&gbraid=0AAAAAC9yBkCuY1XCOe54dwAzS3bpeogBG)
+The problem can be found at the following link: [Question Link](https://www.geeksforgeeks.org/problems/game-of-xor1541/1?_gl=1*1ymyq2c*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjwlYHBBhD9ARIsALRu09pbgqNAyqVxhcm8IAnjUTMlLJhIC1w5aC7xa3QAQYivF9iTVK4woaUaAsehEALw_wcB&gbraid=0AAAAAC9yBkCuY1XCOe54dwAzS3bpeogBG)
 
 ### Problem Description
 
@@ -31,9 +31,35 @@ arr[] = [1, 2]
 - **Expected Time Complexity:** O(n)
 - **Expected Auxiliary Space Complexity:** O(1)
 
-### Accepted Solutions (1)
+### Accepted Solutions (2)
 
 #### Solution 1 (C++)
+
+- **Submitted:** 2026-11-04 23:26:34
+- **Status:** Correct
+- **Marks:** 0
+
+```cpp
+class Solution {
+  public:
+    int subarrayXor(vector<int>& arr) {
+        // code here
+        int len = arr.size();
+        int ans = 0;
+        
+        for(int i=0;i<arr.size();i++){
+            int val = (i+1)*(len-i);
+            if(val%2){
+                ans^=arr[i];
+            }
+            
+        }
+        return ans;
+    }
+};
+```
+
+#### Solution 2 (C++)
 
 - **Submitted:** 2026-11-04 00:03:02
 - **Status:** Correct
@@ -59,4 +85,4 @@ class Solution {
 };
 ```
 
-*Generated on: 11/4/2026, 12:03:30 AM*
+*Generated on: 11/4/2026, 11:27:00 PM*
