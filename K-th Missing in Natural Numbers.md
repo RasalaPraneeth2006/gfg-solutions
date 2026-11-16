@@ -11,15 +11,44 @@ The problem can be found at the following link: [Question Link](https://www.geek
 - **Expected Time Complexity:** O(n log n)
 - **Expected Auxiliary Space Complexity:** O(1)
 
-### Accepted Solutions (1)
+### Accepted Solutions (2)
 
-#### Solution 1 (C++)
+#### Solution 1 (Java)
+
+- **Submitted:** 2026-11-16 23:07:24
+- **Status:** Correct
+- **Marks:** 0
+
+```java
+class Solution {
+    public int findKthSmall(int[] arr, int k) {
+        // code here
+        Arrays.sort(arr);
+        int j=arr.length+k;
+        int b=0;
+        for(int i=1;i<=j;i++){
+            if(b<arr.length && arr[b]==i){
+                b++;
+            }
+            else{
+                k--;
+            }
+            if(k==0){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+#### Solution 2 (Java)
 
 - **Submitted:** 2026-11-16 23:06:34
 - **Status:** Correct
 - **Marks:** 4
 
-```cpp
+```java
 class Solution {
   public:
     int findKthSmall(vector<int>& arr, int k) {
@@ -42,4 +71,4 @@ class Solution {
 };
 ```
 
-*Generated on: 11/16/2026, 11:06:55 PM*
+*Generated on: 11/16/2026, 11:07:51 PM*
